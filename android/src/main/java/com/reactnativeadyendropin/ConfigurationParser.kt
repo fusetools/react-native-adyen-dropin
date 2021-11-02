@@ -61,6 +61,10 @@ class ConfigurationParser(private val clientKey: String, context: ReactApplicati
     return "${this.context.packageName}_${System.currentTimeMillis()}"
   }
 
+  fun getBoolean(config: ReadableMap?, name: String): Boolean {
+    return config !== null && config.hasKey(name) && config.getBoolean(name)
+  }
+
   fun parse(config: ReadableMap): DropInConfiguration {
     val shopperLocale = this.getShopperLocale(config)
     val environment = this.getEnvironment(config)
@@ -70,6 +74,9 @@ class ConfigurationParser(private val clientKey: String, context: ReactApplicati
     val cardConfiguration = CardConfiguration.Builder(shopperLocale, environment, this.clientKey)
       .setShopperReference(shopperReference)
       .setSupportedCardTypes(CardType.MASTERCARD, CardType.VISA)
+      .setHolderNameRequired(getBoolean(config.getMap("card"), "showsHolderNameField"))
+      .setShowStorePaymentField(getBoolean(config.getMap("card"), "showsStorePaymentMethodField"))
+      .setHideCvc(!getBoolean(config.getMap("card"), "showsSecurityCodeField"))
       .build()
 
     val builder = DropInConfiguration.Builder(
