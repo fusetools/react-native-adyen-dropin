@@ -279,6 +279,12 @@ const AdyenDropIn = {
       }
     });
   },
+  /**
+   * ***Optional*** Call this function to hide the drop-in again after having started the payment flow
+   */
+  hide() {
+    AdyenDropInModule.hide();
+  },
 };
 
 export default AdyenDropIn;

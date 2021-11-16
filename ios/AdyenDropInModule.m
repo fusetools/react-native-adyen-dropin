@@ -9,5 +9,6 @@ RCT_EXTERN_METHOD(setAdditionalDetailsCallback: (RCTResponseSenderBlock *)onAddi
 RCT_EXTERN_METHOD(setPaymentResponse: (NSDictionary? *)paymentResponse)
 RCT_EXTERN_METHOD(setDetailsResponse: (NSDictionary? *)detailsResponse)
 RCT_EXTERN_METHOD(start: (NSDictionary *)paymentMethodsResponse resolveCallback:(RCTResponseSenderBlock *)resolveCallback rejectCallback:(RCTResponseSenderBlock *)rejectCallback)
+RCT_EXTERN_METHOD(hide)
 
 @end

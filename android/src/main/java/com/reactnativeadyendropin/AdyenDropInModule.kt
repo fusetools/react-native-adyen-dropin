@@ -175,6 +175,14 @@ class AdyenDropInModule(private val reactContext : ReactApplicationContext): Rea
     }
   }
 
+  @ReactMethod
+  fun hide() {
+    Log.d(TAG, "Called hide (NOOP)")
+
+    // TODO: Find a way to call DropInActivity.hideAllScreens() in adyen-android, or similar result.
+    // https://github.com/Adyen/adyen-android/blob/develop/drop-in/src/main/java/com/adyen/checkout/dropin/ui/DropInActivity.kt
+  }
+
   fun handleError(reason: String?) {
     Log.d(TAG, "handleError - ${reason}")
     this.rejectCallback?.invoke(reason)

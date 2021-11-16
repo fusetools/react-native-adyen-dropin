@@ -215,6 +215,15 @@ class AdyenDropInModule: NSObject {
         }
     }
     
+    @objc
+    func hide() {
+        print("Called hide")
+        
+        DispatchQueue.main.async {
+            self.presenter?.view.isHidden = true
+        }
+    }
+    
     // MARK: - Adyen DropIn
     
     internal func presentDropInComponent(_ paymentMethods: PaymentMethods) {
