@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:wechatpay:4.2.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e809f67e394dca5de5a93bd7342c97dc/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5d33e47a99790c354f1739a84e8dea46/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5d33e47a99790c354f1739a84e8dea46/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5d33e47a99790c354f1739a84e8dea46/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
