@@ -3,11 +3,8 @@ export declare type Amount = {
     currencyCode: string;
 };
 export declare type CardConfiguration = {
-    /** @todo NOT IMPLEMENTED */
     showsHolderNameField?: boolean;
-    /** @todo NOT IMPLEMENTED */
     showsStorePaymentMethodField?: boolean;
-    /** @todo NOT IMPLEMENTED */
     showsSecurityCodeField?: boolean;
 };
 export declare type ApplePayConfiguration = {
@@ -26,7 +23,6 @@ export declare type DropInConfiguration = {
     environment: 'test' | 'live';
     countryCode: string;
     amount: Amount;
-    /** @todo NOT IMPLEMENTED */
     card?: CardConfiguration;
     applePay?: ApplePayConfiguration;
     returnUrl?: string;
@@ -64,6 +60,11 @@ export declare type ModuleConfig = {
          * "details"
          */
         makeDetailsCall: string;
+    };
+    /** Optional custom callbacks */
+    callbacks?: {
+        onSubmit: (data: any) => void;
+        onAdditionalDetails: (data: any) => void;
     };
 };
 export declare type PaymentMethod = {
@@ -109,10 +110,26 @@ declare const AdyenDropIn: {
      */
     setModuleConfig(moduleConfig: ModuleConfig): any;
     /**
+     * ***Optional*** Call this function to set payment response for the RN module
+     * @param paymentResponse Payment response object
+     * @returns `AdyenDropIn` instance (`this`)
+     */
+    setPaymentResponse(paymentResponse: any): any;
+    /**
+     * ***Optional*** Call this function to set details response for the RN module
+     * @param detailsResponse Details response object
+     * @returns `AdyenDropIn` instance (`this`)
+     */
+    setDetailsResponse(detailsResponse: any): any;
+    /**
      * Call this function to show the drop-in and start the payment flow
      * @param paymentMethodsResponse Payment methods response object
      * @returns Promise that resolves with payment result if payment finished without errors
      */
     start(paymentMethodsResponse: PaymentMethodsResponse): PaymentPromise;
+    /**
+     * ***Optional*** Call this function to hide the drop-in again after having started the payment flow
+     */
+    dismiss(): void;
 };
 export default AdyenDropIn;

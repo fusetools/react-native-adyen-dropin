@@ -6,11 +6,8 @@ export type Amount = {
 };
 
 export type CardConfiguration = {
-  /** @todo NOT IMPLEMENTED */
   showsHolderNameField?: boolean;
-  /** @todo NOT IMPLEMENTED */
   showsStorePaymentMethodField?: boolean;
-  /** @todo NOT IMPLEMENTED */
   showsSecurityCodeField?: boolean;
 };
 
@@ -31,7 +28,6 @@ export type DropInConfiguration = {
   environment: 'test' | 'live';
   countryCode: string;
   amount: Amount;
-  /** @todo NOT IMPLEMENTED */
   card?: CardConfiguration;
   applePay?: ApplePayConfiguration;
   returnUrl?: string;
@@ -70,6 +66,11 @@ export type ModuleConfig = {
      * "details"
      */
     makeDetailsCall: string;
+  };
+  /** Optional custom callbacks */
+  callbacks?: {
+    onSubmit: (data: any) => void;
+    onAdditionalDetails: (data: any) => void;
   };
 };
 
@@ -188,6 +189,30 @@ const AdyenDropIn = {
   setModuleConfig(moduleConfig: ModuleConfig) {
     const cleanedModuleConfig = cleanModuleConfig(moduleConfig);
     AdyenDropInModule.setModuleConfig(cleanedModuleConfig);
+    if (moduleConfig.callbacks) {
+      AdyenDropInModule.setSubmitCallback(moduleConfig.callbacks.onSubmit);
+      AdyenDropInModule.setAdditionalDetailsCallback(
+        moduleConfig.callbacks.onAdditionalDetails
+      );
+    }
+    return this;
+  },
+  /**
+   * ***Optional*** Call this function to set payment response for the RN module
+   * @param paymentResponse Payment response object
+   * @returns `AdyenDropIn` instance (`this`)
+   */
+  setPaymentResponse(paymentResponse: any) {
+    AdyenDropInModule.setPaymentResponse(paymentResponse);
+    return this;
+  },
+  /**
+   * ***Optional*** Call this function to set details response for the RN module
+   * @param detailsResponse Details response object
+   * @returns `AdyenDropIn` instance (`this`)
+   */
+  setDetailsResponse(detailsResponse: any) {
+    AdyenDropInModule.setDetailsResponse(detailsResponse);
     return this;
   },
   /**
@@ -253,6 +278,12 @@ const AdyenDropIn = {
         return reject(err);
       }
     });
+  },
+  /**
+   * ***Optional*** Call this function to hide the drop-in again after having started the payment flow
+   */
+  dismiss() {
+    AdyenDropInModule.dismiss();
   },
 };
 
