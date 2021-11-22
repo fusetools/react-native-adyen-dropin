@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:dotpay:4.2.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/30cfd6981229c49e919a1a3dbe38dad6/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/63c7350554fe207aeb32e50355a23857/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/63c7350554fe207aeb32e50355a23857/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/63c7350554fe207aeb32e50355a23857/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
