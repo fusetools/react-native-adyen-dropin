@@ -8,6 +8,8 @@ class AdyenDropInModule: NSObject {
     
     private var apiClient: DefaultAPIClient?
     
+    private var actionComponent: AdyenActionComponent?
+    
     private var dropInConfiguration: DropInComponent.Configuration? = nil
     
     private var resolveCallback: RCTResponseSenderBlock? = nil
@@ -217,6 +219,7 @@ class AdyenDropInModule: NSObject {
         let environment = Environment(baseURL: baseUrl)
         let apiContext = APIContext(environment: environment, clientKey: clientKey)
         self.apiClient = DefaultAPIClient(apiContext: apiContext)
+        self.actionComponent = AdyenActionComponent(apiContext: apiContext)
         
         do {
             self.resolveCallback = resolveCallback
@@ -251,7 +254,7 @@ class AdyenDropInModule: NSObject {
     
     internal func finish(with response: PaymentsResponse) {
         let success = response.resultCode == .authorised || response.resultCode == .received || response.resultCode == .pending
-        currentComponent?.finalizeIfNeeded(with: success)
+        actionComponent?.finalizeIfNeeded(with: success)
 
         presenter?.dismiss(animated: true) { [weak self] in
             print("Dismiss successfully")
@@ -268,7 +271,7 @@ class AdyenDropInModule: NSObject {
     
     internal func finish(with resultCode: ResultCode) {
         let success = resultCode == .authorised || resultCode == .received || resultCode == .pending
-        currentComponent?.finalizeIfNeeded(with: success)
+        actionComponent?.finalizeIfNeeded(with: success)
 
         presenter?.dismiss(animated: true) { [weak self] in
             print("Dismiss successfully")
@@ -284,7 +287,7 @@ class AdyenDropInModule: NSObject {
     }
 
     internal func finish(with error: Error) {
-        currentComponent?.finalizeIfNeeded(with: false)
+        actionComponent?.finalizeIfNeeded(with: false)
 
         presenter?.dismiss(animated: true) { [weak self] in
             if let componentError = error as? ComponentError {
@@ -340,13 +343,16 @@ class AdyenDropInModule: NSObject {
     }
 
     private func handle(_ action: Action) {
-        (currentComponent as? DropInComponent)?.handle(action)
+        actionComponent?.handle(action)
     }
 }
 
 extension AdyenDropInModule: DropInComponentDelegate {
 
     internal func didSubmit(_ data: PaymentComponentData, for paymentMethod: PaymentMethod, from component: DropInComponent) {
+        // Hide drawer
+        presenter?.dismiss(animated: true)
+
         if self.onSubmitCallback != nil {
             self.onSubmitCallback?([[
                 "paymentMethod": data.paymentMethod.encodable.dictionary as Any,
